@@ -68,7 +68,7 @@ if user_input:
         {"role": "user", "content": user_input}
     ]
     
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model="gpt-3.5-turbo-0613",  # Use "gpt-4" if you have access
         messages=messages,
         functions=function_descriptions,
@@ -115,7 +115,7 @@ if user_input:
                 "content": weather_info_str,
             })
             
-            second_response = openai.ChatCompletion.create(
+            second_response = openai.chat.completions.create(
                 model="gpt-3.5-turbo-0613",  # Use "gpt-4" if you have access
                 messages=messages,
             )
