@@ -68,19 +68,19 @@ if user_input:
         {"role": "user", "content": user_input}
     ]
     
-    response = openai.chat.completions.create(
-        model="gpt-4o",
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo-0613",  # Use "gpt-4" if you have access
         messages=messages,
         functions=function_descriptions,
         function_call="auto",
     )
     
-    response_message = response['choices'][0]['message']
+    response_message = response.choices[0].message
     
     # Step 2: Check if the assistant wants to call a function
     if response_message.get("function_call"):
-        function_name = response_message["function_call"]["name"]
-        function_args = response_message["function_call"]["arguments"]
+        function_name = response_message.function_call.name
+        function_args = response_message.function_call.arguments
         # Parse function arguments
         try:
             function_args = json.loads(function_args)
@@ -101,23 +101,30 @@ if user_input:
             weather_info_str = json.dumps(weather_info)
             
             # Step 3: Send the assistant's response and function result back to OpenAI
-            messages.append(response_message)
+            messages.append({
+                "role": "assistant",
+                "content": None,
+                "function_call": {
+                    "name": function_name,
+                    "arguments": json.dumps(function_args)
+                }
+            })
             messages.append({
                 "role": "function",
                 "name": function_name,
                 "content": weather_info_str,
             })
             
-            second_response = openai.chat.completions.create(
-                model="gpt-4o",
+            second_response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo-0613",  # Use "gpt-4" if you have access
                 messages=messages,
             )
             
-            assistant_message = second_response['choices'][0]['message']['content']
+            assistant_message = second_response.choices[0].message.content
             
             # Display the assistant's final answer
             st.write(assistant_message)
     else:
         # Assistant didn't call any function, just display the response
-        assistant_message = response_message['content']
+        assistant_message = response_message.content
         st.write(assistant_message)
