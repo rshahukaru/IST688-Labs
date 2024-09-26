@@ -6,7 +6,7 @@ from openai import OpenAI
 st.markdown('<h1 style="color: #03B8AC;">LAB-02: Revanth Shahukaru</h1>', unsafe_allow_html=True)
 
 # Retrieve the OpenAI API key from the secrets file
-openai_api_key = st.secrets["OPENAI_API_KEY"]
+openai_api_key = st.secrets["openai_api_key"]
 
 # Create an OpenAI client.
 client = OpenAI(api_key=openai_api_key)
