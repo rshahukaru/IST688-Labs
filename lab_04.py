@@ -4,7 +4,7 @@ from openai import OpenAI
 from PyPDF2 import PdfReader
 import os
 
-import streamlit
+import streamlit as st
 
 def main():
     st.title("Lab 04 - ChromaDB")
