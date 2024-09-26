@@ -4,6 +4,11 @@ from openai import OpenAI
 from PyPDF2 import PdfReader
 import os
 
+import streamlit
+
+def main():
+    st.title("Lab 04 - ChromaDB")
+
 # Fix for sqlite3 on Streamlit Cloud
 __import__('pysqlite3')
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')

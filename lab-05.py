@@ -1,3 +1,5 @@
 import streamlit
 
-st.title("TBD")
+def main():
+    st.title("Lab 05 - TBD")
+    st.write("Welcome to Lab 05")
