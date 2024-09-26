@@ -1,0 +1,12 @@
+streamlit
+requests
+openai
+bs4
+google-generativeai
+anthropic
+PyPDF2
+langchain
+langchain_ollama
+tiktoken
+chromadb
+pysqlite3
