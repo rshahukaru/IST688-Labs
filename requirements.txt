@@ -1,5 +1,6 @@
 streamlit
 openai
+requests
 tiktoken
 PyMuPDF
 chromadb
