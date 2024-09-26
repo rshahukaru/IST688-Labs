@@ -68,7 +68,7 @@ if user_input:
         {"role": "user", "content": user_input}
     ]
     
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model="gpt-3.5-turbo-0613",
         messages=messages,
         functions=function_descriptions,
