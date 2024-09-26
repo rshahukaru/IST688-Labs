@@ -108,7 +108,7 @@ if user_input:
                 "content": weather_info_str,
             })
             
-            second_response = openai.ChatCompletion.create(
+            second_response = openai.chat.completions.create(
                 model="gpt-4o",
                 messages=messages,
             )
