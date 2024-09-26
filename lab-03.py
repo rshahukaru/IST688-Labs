@@ -1,6 +1,9 @@
 import streamlit as st
 from openai import OpenAI
 
+def main():
+    st.title("Lab 03")
+
 # Show title and description.
 st.markdown('<h1 style="color: #03B8AC;">LAB-03: Revanth Shahukaru - Document question answering and Chatbot</h1>', unsafe_allow_html=True)
 st.write(

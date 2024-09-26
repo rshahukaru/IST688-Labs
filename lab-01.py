@@ -1,6 +1,9 @@
 import streamlit as st
 from openai import OpenAI
 
+def main():
+    st.title("Lab 01")
+
 # Show title and description.
 st.write("This line is added to :blue[check] whether the changes are being saved or not")
 st.markdown('<h1 style="color: #03B8AC;">LAB-01: Revanth Shahukaru</h1>', unsafe_allow_html=True)
