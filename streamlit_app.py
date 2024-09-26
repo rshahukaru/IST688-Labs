@@ -9,7 +9,7 @@ pages = {
     "Lab 01": "lab-01",
     "Lab 02": "lab-02",
     "Lab 03": "lab-03",
-    "Lab 04": "lab-04",
+    "Lab 04": "lab-04.py",
     "Lab 05": "lab-05",
     "Lab 06": "lab-06"
 }
