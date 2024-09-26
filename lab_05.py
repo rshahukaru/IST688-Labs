@@ -115,7 +115,7 @@ if user_input:
                 "content": None,
                 "function_call": {
                     "name": function_name,
-                    "arguments": json.dumps(function_args)
+                    "arguments": response_message.function_call.arguments
                 }
             })
             messages.append({
