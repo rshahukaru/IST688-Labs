@@ -69,7 +69,7 @@ if user_input:
     ]
     
     response = openai.chat.completions.create(
-        model="gpt-3.5-turbo-0613",  # Use "gpt-4" if you have access
+        model="gpt-4o",  # Use "gpt-4" if you have access
         messages=messages,
         functions=function_descriptions,
         function_call="auto",
@@ -116,7 +116,7 @@ if user_input:
             })
             
             second_response = openai.chat.completions.create(
-                model="gpt-3.5-turbo-0613",  # Use "gpt-4" if you have access
+                model="gpt-4o",  # Use "gpt-4" if you have access
                 messages=messages,
             )
             
