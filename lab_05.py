@@ -69,7 +69,7 @@ if user_input:
     ]
     
     response = openai.chat.completions.create(
-        model="gpt-3.5-turbo-0613",
+        model="gpt-4o",
         messages=messages,
         functions=function_descriptions,
         function_call="auto",
