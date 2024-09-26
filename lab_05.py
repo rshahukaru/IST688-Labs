@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
-import openai
 import json
+from openai import OpenAI
 
 st.title("Lab 5 - Weather and Clothing Suggestion Bot")
 
@@ -9,8 +9,13 @@ st.title("Lab 5 - Weather and Clothing Suggestion Bot")
 openai_api_key = st.secrets["openai_api_key"]
 openweathermap_api_key = st.secrets["openweathermap_api_key"]
 
-# Set OpenAI API key
-openai.api_key = openai_api_key
+# Initialize the OpenAI client if not done already
+def ensure_openai_client():
+    if 'openai_client' not in st.session_state:
+        # Store the OpenAI client in session state
+        st.session_state.openai_client = OpenAI(api_key=openai_api_key)
+
+ensure_openai_client()
 
 # Define function to get current weather
 def get_current_weather(location, API_KEY):
@@ -62,23 +67,27 @@ function_descriptions = [
 user_input = st.text_input("Ask something about the weather and clothing:")
 
 if user_input:
+    # Ensure OpenAI client
+    ensure_openai_client()
+
     # Step 1: Send the user's message to OpenAI, with function definitions
     messages = [
         {"role": "system", "content": "You are a helpful assistant that provides weather information and clothing suggestions, and advice on whether it's a good day for a picnic."},
         {"role": "user", "content": user_input}
     ]
-    
-    response = openai.chat.completions.create(
-        model="gpt-4o",  # Use "gpt-4" if you have access
+
+    response = st.session_state.openai_client.chat.completions.create(
+        model="gpt-4o",
         messages=messages,
         functions=function_descriptions,
         function_call="auto",
     )
-    
+
+    # Access the response message using dot notation
     response_message = response.choices[0].message
-    
+
     # Step 2: Check if the assistant wants to call a function
-    if response_message.get("function_call"):
+    if hasattr(response_message, 'function_call') and response_message.function_call:
         function_name = response_message.function_call.name
         function_args = response_message.function_call.arguments
         # Parse function arguments
@@ -99,7 +108,7 @@ if user_input:
         else:
             # Convert weather_info to a string to send back to the assistant
             weather_info_str = json.dumps(weather_info)
-            
+
             # Step 3: Send the assistant's response and function result back to OpenAI
             messages.append({
                 "role": "assistant",
@@ -114,14 +123,14 @@ if user_input:
                 "name": function_name,
                 "content": weather_info_str,
             })
-            
-            second_response = openai.chat.completions.create(
-                model="gpt-4o",  # Use "gpt-4" if you have access
+
+            second_response = st.session_state.openai_client.chat.completions.create(
+                model="gpt-4o",
                 messages=messages,
             )
-            
+
             assistant_message = second_response.choices[0].message.content
-            
+
             # Display the assistant's final answer
             st.write(assistant_message)
     else:
