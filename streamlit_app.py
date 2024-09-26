@@ -1,31 +1,23 @@
 import streamlit as st
-import importlib
 
-# Configuration for the main app
-st.set_page_config(page_title="Lab Manager")
+# Set up individual pages for each homework
+lab_01_page = st.Page("lab-01.py", title="Lab-01")
+lab_02_page = st.Page("lab-02.py", title="Lab-02")
+lab_03_page = st.Page("lab-03.py", title="Lab-03")
+lab_04_page = st.Page("lab-04.py", title="Lab-04", default = True)
 
-# Define the pages, mapping them to their module names
-pages = {
-    "Lab 01": "lab_01",
-    "Lab 02": "lab_02",
-    "Lab 03": "lab_03",
-    "Lab 04": "lab_04",
-    "Lab 05": "lab_05",
-    "Lab 06": "lab_06"
-}
+# The below labs' .py files have not been created yet. So, I am redirecting them to lab-04.py
+lab_05_page = st.Page("lab-05.py", title="Lab-05")
+lab_06_page = st.Page("lab-06.py", title="Lab-06")
 
-# Sidebar for navigation
-st.sidebar.title("Lab Selector")
+# Navigation setup with all homework pages
+pg = st.navigation([
+    lab_01_page, lab_02_page, lab_03_page, lab_04_page, lab_05_page,
+    lab_06_page
+])
 
-# Set default selection to "Lab 04"
-default_page = "Lab 04"
-selection = st.sidebar.radio("Select Lab", list(pages.keys()), index=list(pages.keys()).index(default_page))
+# Configuration of the main app
+st.set_page_config(page_title="Lab Assignments")
 
-# Dynamically import and run the selected lab page
-try:
-    page_module = importlib.import_module(pages[selection])
-    page_module.main()  # Ensure each lab file has a `main` function
-except ModuleNotFoundError:
-    st.error(f"Module for {selection} not found.")
-except AttributeError:
-    st.error(f"Module {pages[selection]} does not have a main() function.")
+# Running the page navigation
+pg.run()
